@@ -24,5 +24,17 @@ def loadFromDatabase(login_db, users, passwords, status):
         passwords.append(row[2])
         status.append(row[3])
 
+def updateDatabase(login_db, size, user, password, status):
+    # EFFECT: Initialize a cursor for the database
+    cur = login_db.cursor()
+    ID = str(size + 1)
+
+    command = "INSERT INTO userPass VALUES ('" + ID + "', '" + user + "', '" + password + "', " + status + ")"
+
+    # EFFECT: Obtain the required table from database
+    cur.execute(command)
+    login_db.commit()
+    print("Your username and password combination has been saved!")
+
 def disconnectFromDatabase(login_db):
     login_db.close()
