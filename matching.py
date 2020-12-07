@@ -191,15 +191,10 @@ def sort_skill(username: List[str], sort_dict: 'NGOMatch') -> List[str]:
             return 1    
     
 
-def sort_interest(username: List[str], sort_dict: 'NGOMatch') -> List[str]:
-    
-    inte = sort_dict['sort_by']
+def sort_interest(username: List[str]) -> List[str]:
     
     for user in username:
-        if inte in user['interest']:
-            return -1
-        else:
-            return 1
+        if user[1] > 
         
 
 def user_sort(data: 'Climatematch', results: List[str], 
@@ -217,3 +212,39 @@ def user_sort(data: 'Climatematch', results: List[str],
         results[position] = current  
         
         
+class Node:
+
+    def __init__(self, data):
+
+        self.left = None
+        self.right = None
+        self.data = data
+
+    def insert(self, data):
+# Compare the new value with the parent node
+        if self.data:
+            if data < self.data:
+                if self.left is None:
+                    self.left = Node(data)
+                else:
+                    self.left.insert(data)
+            elif data > self.data:
+                if self.right is None:
+                    self.right = Node(data)
+                else:
+                    self.right.insert(data)
+        else:
+            self.data = data
+
+# Print the tree
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print( self.data),
+        if self.right:
+            self.right.PrintTree()
+import tree
+
+def sort_user() -> List[str]:
+    
+    
