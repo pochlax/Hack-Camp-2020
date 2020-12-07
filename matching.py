@@ -166,13 +166,13 @@ def match_user(dictionary: 'Climatematch',
         total[user] = {}
         skillsCount = 0
         interestCount = 0
-        for sk in dictionary[user][skills]:           
+        for sk in dictionary[user]['skills']:           
             if sk in match['skills']['technical']:
                 skillsCount = skillsCount + 1
             elif sk in match['skills']['interpersonal']:
                 skillsCount = skillsCount + 1
                 
-        for inte in dictionary[user][interest]:          
+        for inte in dictionary[user]['interest']:          
             if inte in match['interest']:
                 interestCount = interestCount + 1
                 
