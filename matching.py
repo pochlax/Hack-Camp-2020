@@ -145,7 +145,7 @@ def process_query(file: TextIO) -> 'NGOMatch':
 
 
 def match_user(dictionary: 'Climatematch', 
-                       match: 'NGOMatch') -> Dict[str, Dict[str, object]]:
+                       match: 'NGOMatch') -> Dict[str, tuple(int,int)]:
     """Return a list of usernames that match the skills criteria
     (at least 1 technical and/or 1 interpersonal)
     
@@ -156,26 +156,27 @@ def match_user(dictionary: 'Climatematch',
     >>> match = {'skills': {'technical': ['Python', 'Photoshop'], 
                  'interpersonal': ['communication']}, 
                  'interest': ['Environment'], 'number': 3, 'sort-by': 'skill'}
-       lst = {'agjkk': {'skills': ['Python', 'Photoshop'], 
-                 'interest': ['Climate']}, 'agjkk': {'skills': ['Python'], 
-                 'interest': ['Environment']}},
+       lst = {'agjkk': <2, 1>, 
+             'agjkk': <['Python'], ['Environment']>},
     """
 
     total = {}
     
     for user in dictionary:
         total[user] = {}
-        total[user]['skills'] = []
-        total[user]['interest'] = []
+        skillsCount = 0
+        interestCount = 0
         for sk in dictionary[user][skills]:           
             if sk in match['skills']['technical']:
-                total[user]['skills'].append(sk)
+                skillsCount = skillsCount + 1
             elif sk in match['skills']['interpersonal']:
-                total[user]['skills'].append(sk)
+                skillsCount = skillsCount + 1
                 
         for inte in dictionary[user][interest]:          
             if inte in match['interest']:
-                total[user]['interest'].append(inte)
+                interestCount = interestCount + 1
+                
+        total[user][(skillsCount, interestCount)]
     return total
 
 
