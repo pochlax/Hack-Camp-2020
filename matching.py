@@ -59,11 +59,6 @@ Process:
 #List of skills
 #List of interests
 
-Matching criteria:
-- if users have 2 or more matched skills, the company get into matching list
-- if users have 2 or more matched skills & 1 matched interest, the company 
-get into preminum list
-
 """
 def process_data(file: TextIO) -> 'Climatematch':
     """ Return Climatematch dictionary from the user's data or the 
@@ -149,16 +144,6 @@ def process_query(file: TextIO) -> 'NGOMatch':
     return query_dict
 
 
-# Helper_function
-def case_in(name: str, word: str) -> bool:
-    
-    if name.lower() in word.lower():
-        return True
-    elif name.upper() in word.upper():
-        return True
-    return False
-
-
 def match_user(dictionary: 'Climatematch', 
                        match: 'NGOMatch') -> Dict[str, Dict[str, object]]:
     """Return a list of usernames that match the skills criteria
@@ -171,6 +156,9 @@ def match_user(dictionary: 'Climatematch',
     >>> match = {'skills': {'technical': ['Python', 'Photoshop'], 
                  'interpersonal': ['communication']}, 
                  'interest': ['Environment'], 'number': 3, 'sort-by': 'skill'}
+       lst = {'agjkk': {'skills': ['Python', 'Photoshop'], 
+                 'interest': ['Climate']}, 'agjkk': {'skills': ['Python'], 
+                 'interest': ['Environment']}},
     """
 
     total = {}
@@ -185,7 +173,7 @@ def match_user(dictionary: 'Climatematch',
             elif sk in match['skills']['interpersonal']:
                 total[user]['skills'].append(sk)
                 
-        for inte in dictionary[user][skills]:          
+        for inte in dictionary[user][interest]:          
             if inte in match['interest']:
                 total[user]['interest'].append(inte)
     return total
@@ -210,10 +198,10 @@ def sort_interest(username: List[str], sort_dict: 'NGOMatch') -> List[str]:
         if inte in user['interest']:
             return -1
         else:
-            return 1      
+            return 1
         
 
-def user_sort(twitter_data: 'Climatematch', results: List[str], 
+def user_sort(data: 'Climatematch', results: List[str], 
                comparison_func: Callable[['Climatematch', str, str], int]
                ) -> None:
     
@@ -226,3 +214,5 @@ def user_sort(twitter_data: 'Climatematch', results: List[str],
             results[position] = results[position - 1]
             position = position - 1 
         results[position] = current  
+        
+        
