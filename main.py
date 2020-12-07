@@ -37,7 +37,7 @@ elif (choiceInput == "2"):
     print("Enter the Password:")
     passwordInput = input()
 
-    print("Are you an NGO?")
+    print("Are you an NGO? (Enter true or false)")
     statusInput = input()
 
     updateDatabase(login_db, len(users), userInput, passwordInput, statusInput)
